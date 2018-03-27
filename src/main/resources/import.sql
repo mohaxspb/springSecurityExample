@@ -1,0 +1,1 @@
+INSERT INTO users(name_first, name_second, name_third, role, email, password, avatar) VALUES('Ivan', 'Ivanov', 'Ivanovich', 'ROLE_ADMIN', 'test@test.ru', '{noop}password', 'https://avatars0.githubusercontent.com/u/9077598');

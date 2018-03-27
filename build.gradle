@@ -1,0 +1,74 @@
+buildscript {
+    ext.kotlin_version = '1.2.31'
+    ext.spring_boot_version = '2.0.0.RELEASE'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        //spring
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+        //kotlin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // Required for Kotlin integration for spring
+        // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+        //fixes no-arg construcor errors
+        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
+    }
+}
+
+group 'scp'
+version '1.0.0'
+
+apply plugin: 'java'
+
+//kotlin
+apply plugin: 'kotlin'
+// See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+apply plugin: "kotlin-spring"
+//use entities with data classes
+apply plugin: "kotlin-jpa"
+
+//spring boot
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+//artifact
+bootJar {
+    baseName = 'gs-spring-boot'
+    version =  '1.0.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    //spring
+    compile "org.springframework.boot:spring-boot-starter-web"
+    //info
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    //data
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    //security
+    compile "org.springframework.security:spring-security-web:5.0.3.RELEASE"
+    compile 'org.springframework.security.oauth:spring-security-oauth2:2.3.0.RELEASE'
+    //spring END
+    //kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    //fix classNotFound
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    //postgresql
+    compile 'org.postgresql:postgresql:42.2.1'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
