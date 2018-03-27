@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class IndexController {
 
-    @RequestMapping("/")
+    @GetMapping
     fun index(): String = "Greetings from Spring Boot!"
 
     @GetMapping("/hello")
