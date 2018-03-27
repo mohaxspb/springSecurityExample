@@ -7,10 +7,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.FilterType
 
 
-@ComponentScan(
-        basePackages = ["ru.spring.api"],
-        excludeFilters = [ComponentScan.Filter(type = FilterType.ANNOTATION, value = [Configuration::class])]
-)
+
 @SpringBootApplication
 class Application
 
