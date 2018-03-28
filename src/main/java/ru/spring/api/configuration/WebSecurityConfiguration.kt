@@ -21,7 +21,8 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
     lateinit var userDetailsService: UserDetailsService
 
     @Bean
-    fun passwordEncoder() = NoOpPasswordEncoder.getInstance() as NoOpPasswordEncoder
+//    fun passwordEncoder() = NoOpPasswordEncoder.getInstance() as NoOpPasswordEncoder
+    fun passwordEncoder() = BCryptPasswordEncoder()
 
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth

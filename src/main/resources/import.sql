@@ -1,3 +1,3 @@
-INSERT INTO users(name_first, name_second, name_third, username, password, avatar, enabled) VALUES('Ivan', 'Ivanov', 'Ivanovich', 'test@test.ru', '{noop}password', 'https://avatars0.githubusercontent.com/u/9077598', 'true');
+INSERT INTO users(name_first, name_second, name_third, username, password, avatar, enabled) VALUES('Ivan', 'Ivanov', 'Ivanovich', 'test@test.ru', '$2a$10$eWYCXHSkfoBS8Yy2Tx3LuufevEs8bJZtAtmQSjIJScDSNQ9ORBY5C', 'https://avatars0.githubusercontent.com/u/9077598', 'true');
 INSERT INTO authorities(user_id,authority) VALUES(1,'ROLE_ADMIN');
 INSERT INTO authorities(user_id,authority) VALUES(1,'ROLE_USER');

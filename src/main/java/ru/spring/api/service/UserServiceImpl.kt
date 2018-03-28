@@ -26,5 +26,11 @@ class UserServiceImpl : UserService {
 
     override fun update(user: User): User = repository.save(user)
 
-    override fun loadUserByUsername(username: String) = repository.findOneByMyUsername(username)
+    override fun loadUserByUsername(username: String): User {
+        val user = repository.findOneByMyUsername(username)
+
+        println("user: $user")
+
+        return user
+    }
 }

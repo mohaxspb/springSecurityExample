@@ -28,7 +28,7 @@ data class User(
         var myPassword: String,
         var avatar: String,
         val enabled: Boolean,
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "userId")
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "userId", fetch = FetchType.EAGER)
         val userAuthorities: Set<Authority>,
         @CreationTimestamp
         @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
