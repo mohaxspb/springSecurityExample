@@ -10,26 +10,26 @@ import ru.spring.api.bean.UserNotFoundException
 @RestController
 @RequestMapping("/users")
 class UserController {
-
-    @Autowired
-    lateinit var userService: UserService
-
-    @GetMapping("/all")
-    fun showUsers() = userService.findAll()
-
-    //todo use post with given model
-    @RequestMapping("/update/{id}")
-    fun updateUser(
-            @PathVariable(value = "id") id: Long,
-            @RequestParam(value = "first_name") firstName: String
-    ): User {
-        val user = userService.getById(id) ?: throw UserNotFoundException()
-        user.nameFirst = firstName
-        userService.update(user)
-
-        return user
-    }
-
-    @GetMapping("/{id}")
-    fun getUserById(@PathVariable(value = "id") id: Long) = userService.getById(id)
+//
+//    @Autowired
+//    lateinit var userService: UserService
+//
+//    @GetMapping("/all")
+//    fun showUsers() = userService.findAll()
+//
+//    //todo use post with given model
+//    @RequestMapping("/update/{id}")
+//    fun updateUser(
+//            @PathVariable(value = "id") id: Long,
+//            @RequestParam(value = "first_name") firstName: String
+//    ): User {
+//        val user = userService.getById(id) ?: throw UserNotFoundException()
+//        user.nameFirst = firstName
+//        userService.update(user)
+//
+//        return user
+//    }
+//
+//    @GetMapping("/{id}")
+//    fun getUserById(@PathVariable(value = "id") id: Long) = userService.getById(id)
 }
