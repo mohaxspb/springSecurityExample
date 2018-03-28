@@ -22,11 +22,14 @@ data class User(
         var nameSecond: String,
         @Column(name = "name_third")
         var nameThird: String,
-        var role: String,
-        var email: String,
+        @Column(name = "username")
+        var myUsername: String,
         @Column(name = "password")
         var myPassword: String,
         var avatar: String,
+        val enabled: Boolean,
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "userId")
+        val userAuthorities: Set<Authority>,
         @CreationTimestamp
         @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         val created: Timestamp,
@@ -35,11 +38,13 @@ data class User(
         @Column(insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         val updated: Timestamp
 ) : UserDetails {
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf(SimpleGrantedAuthority("ADMIN"))
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+        return userAuthorities.map { SimpleGrantedAuthority(it.authority) }.toMutableList()
+    }
 
-    override fun isEnabled() = true
+    override fun isEnabled() = enabled
 
-    override fun getUsername() = email
+    override fun getUsername() = myUsername
 
     override fun isCredentialsNonExpired() = true
 

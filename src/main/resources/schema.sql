@@ -1,13 +1,24 @@
-DROP TABLE IF EXISTS users cascade;
-CREATE TABLE users(
-id serial PRIMARY KEY,
-    name_first varchar(100),
-    name_second varchar(100),
-    name_third varchar(100),
-    role varchar(10),
-    email varchar(100),
-    password varchar(100),
-    avatar varchar(500),
-    created timestamptz NOT NULL,
-    updated timestamptz NOT NULL
-);
+--DROP TABLE IF EXISTS users cascade;
+--CREATE TABLE users(
+--id serial PRIMARY KEY,
+--    name_first varchar(100),
+--    name_second varchar(100),
+--    name_third varchar(100),
+--    role varchar(10),
+--    username varchar(100),
+--    password varchar(100),
+--    avatar varchar(500),
+--    enabled boolean,
+--    created timestamptz NOT NULL,
+--    updated timestamptz NOT NULL
+--);
+--
+--DROP TABLE IF EXISTS authorities cascade;
+--CREATE TABLE authorities(
+--	username varchar(100) NOT NULL,
+--	authority varchar(50) NOT NULL,
+--	primary key (username, authority)
+----	,
+----	constraint fk_authorities_users foreign key(username) references users(username)
+--);
+----create unique index ix_auth_username on authorities (username,authority);
