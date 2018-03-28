@@ -12,6 +12,7 @@ import ru.spring.api.service.UserService
 @RestController
 class IndexController {
 
+    @GetMapping
     @Autowired
     lateinit var userService: UserService
 
