@@ -22,8 +22,8 @@ import ru.spring.api.Password
 @EnableResourceServer
 class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
 
-//    @Autowired
-//    lateinit var userDetailsService: UserDetailsService
+    @Autowired
+    lateinit var userDetailsService: UserDetailsService
 
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder()
@@ -45,10 +45,19 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
 //                .formLogin()
 //    }
 
-    @Bean(name = arrayOf(BeanIds.AUTHENTICATION_MANAGER))
+//    @Bean(name = arrayOf(BeanIds.AUTHENTICATION_MANAGER))
+//    override fun authenticationManagerBean(): AuthenticationManager {
+//        return super.authenticationManagerBean()
+//    }
+
+    /**
+     * fixes some error, I think
+     */
+    @Bean
     override fun authenticationManagerBean(): AuthenticationManager {
         return super.authenticationManagerBean()
     }
+
 
     /////////
     @Autowired
@@ -70,8 +79,4 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .csrf().disable()
     }
-
-//    override fun configure(web: WebSecurity) {
-//        web.ignoring().antMatchers("/**")
-//    }
 }

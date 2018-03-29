@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.BeanIds
+import org.springframework.security.crypto.password.PasswordEncoder
 import ru.spring.api.Password
 
 
@@ -21,8 +22,11 @@ import ru.spring.api.Password
 @EnableAuthorizationServer
 class AuthorizationServerConfiguration() : AuthorizationServerConfigurerAdapter() {
 
-//    @Autowired
-//    private lateinit var clientDetailsService: ClientDetailsService
+    @Autowired
+    private lateinit var clientDetailsService: ClientDetailsService
+
+    @Autowired
+    private lateinit var passwordEncoder: PasswordEncoder
 
 //    override fun configure(clients: ClientDetailsServiceConfigurer) {
 //        clients
@@ -31,26 +35,14 @@ class AuthorizationServerConfiguration() : AuthorizationServerConfigurerAdapter(
 //                .authorizedGrantTypes("password", "refresh_token")
 //                .authorities("ADMIN", "USER")
 //                .scopes("read", "write")
-//                .secret("client_secret")
+//                .secret(passwordEncoder.encode("client_secret"))
 //    }
-//
-//    @Bean
-//    fun tokenStore(): TokenStore = InMemoryTokenStore()
-//
+
+    @Bean
+    fun tokenStore(): TokenStore = InMemoryTokenStore()
+
     @Autowired
     lateinit var authenticationManager: AuthenticationManager
-//
-//    override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
-//        endpoints
-//                .tokenStore(tokenStore())
-//                .authenticationManager(authenticationManager)
-//    }
-
-
-    //////////
-
-//    @Autowired
-//    private val authenticationManager: AuthenticationManager? = null
 
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
         endpoints.tokenStore(tokenStore())
@@ -67,14 +59,7 @@ class AuthorizationServerConfiguration() : AuthorizationServerConfigurerAdapter(
                 .accessTokenValiditySeconds(3600)
     }
 
-    @Bean
-    fun tokenStore(): TokenStore {
-        return InMemoryTokenStore()
-    }
-
-    @Throws(Exception::class)
-    override fun configure(security: AuthorizationServerSecurityConfigurer?) {
-        security!!.allowFormAuthenticationForClients() // here
-    }
-
+//    override fun configure(security: AuthorizationServerSecurityConfigurer) {
+//        security.allowFormAuthenticationForClients()
+//    }
 }
