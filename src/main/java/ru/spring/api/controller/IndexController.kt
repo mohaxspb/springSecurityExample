@@ -34,5 +34,6 @@ class IndexController {
     fun showAuthorities() = authoritiesService.findAll()
 
     @GetMapping("/encrypt")
-    fun encrypt(@RequestParam(value = "name", defaultValue = "World") name: String) = passwordEncoder.encode(name)
+    fun encrypt(@RequestParam(value = "name", defaultValue = "World") name: String) =
+            passwordEncoder.encode(name)
 }
