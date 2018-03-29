@@ -12,8 +12,8 @@ import ru.spring.api.service.UserService
 @RestController
 class IndexController {
 
-//    @Autowired
-//    lateinit var userService: UserService
+    @Autowired
+    lateinit var userService: UserService
 
     @Autowired
     lateinit var authoritiesService: AuthorityService
@@ -27,8 +27,8 @@ class IndexController {
     @GetMapping("/hello")
     fun test(@RequestParam(value = "name", defaultValue = "World") name: String) = "Hello, $name"
 
-//    @GetMapping("/showUsers")
-//    fun showUsers() = userService.findAll()
+    @GetMapping("/showUsers")
+    fun showUsers() = userService.findAll()
 
     @GetMapping("/showAuthorities")
     fun showAuthorities() = authoritiesService.findAll()
