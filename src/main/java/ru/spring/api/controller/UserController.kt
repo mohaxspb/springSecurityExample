@@ -1,6 +1,7 @@
 package ru.spring.api.controller
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.annotation.Secured
 import org.springframework.web.bind.annotation.*
 import ru.spring.api.service.UserService
 import ru.spring.api.bean.User
@@ -15,10 +16,12 @@ class UserController {
     @Autowired
     lateinit var userService: UserService
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/all")
     fun showUsers() = userService.findAll()
 
     //todo use post with given model
+    @Secured("ROLE_DBA")
     @RequestMapping("/update/{id}")
     fun updateUser(
             @PathVariable(value = "id") id: Long,

@@ -16,12 +16,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import ru.spring.api.Password
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import ru.spring.api.service.UserServiceImpl
 
 
 @Configuration
 @EnableWebSecurity
 @EnableResourceServer
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     @Autowired
@@ -86,8 +88,8 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
     public override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/users/1").hasAnyRole("ADMIN", "ROLE_ADMIN")
-                .antMatchers("/users/all").hasAnyRole("USER", "ROLE_USER")
+                .antMatchers("/users/update/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                .antMatchers("/users/all").hasAnyAuthority("USER", "ROLE_USER")
                 .anyRequest().authenticated()
 
                 .and()

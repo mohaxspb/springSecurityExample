@@ -28,8 +28,8 @@ data class User(
         var myPassword: String,
         var avatar: String,
         val enabled: Boolean,
-//        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "userId", fetch = FetchType.EAGER)
-//        val userAuthorities: Set<Authority>,
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "userId", fetch = FetchType.EAGER)
+        val userAuthorities: Set<Authority>,
         @CreationTimestamp
         @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         val created: Timestamp,
@@ -39,8 +39,7 @@ data class User(
         val updated: Timestamp
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-//        return userAuthorities.map { SimpleGrantedAuthority(it.authority) }.toMutableList()
-        return mutableListOf(SimpleGrantedAuthority("ROLE_ADMIN"))
+        return userAuthorities.map { SimpleGrantedAuthority(it.authority) }.toMutableList()
     }
 
     override fun isEnabled() = enabled
