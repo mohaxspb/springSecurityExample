@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import ru.spring.api.service.UserServiceImpl
@@ -50,30 +49,9 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
                 .authenticationProvider(authenticationProvider())
     }
 
-//    override fun configure(http: HttpSecurity) {
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                    .antMatchers("/users/**").authenticated()
-//                    .antMatchers("/**", "/oauth/**").permitAll()
-//            .and()
-//                .formLogin()
-//    }
-
-    public override fun configure(http: HttpSecurity) {
+    override fun configure(http: HttpSecurity) {
         http
-                .antMatcher("/users")
-                .authorizeRequests()
-                .anyRequest().authenticated()
-
-                .and()
-                .antMatcher("/users")
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
-                .and()
                 .csrf().disable()
-                .antMatcher("/**")
-                .formLogin().permitAll()
+                .authorizeRequests().anyRequest().authenticated()
     }
 }
