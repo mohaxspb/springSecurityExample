@@ -12,7 +12,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer
 import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore
 import ru.spring.api.service.UserServiceImpl
+import javax.sql.DataSource
 
 
 @Configuration
@@ -25,19 +27,23 @@ class AuthorizationServerConfiguration() : AuthorizationServerConfigurerAdapter(
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder
 
+    @Autowired
+    private lateinit var dataSource: DataSource
+
+    @Bean
+//    fun tokenStore(): TokenStore = InMemoryTokenStore()
+    fun tokenStore() = JdbcTokenStore(dataSource)
+
     override fun configure(clients: ClientDetailsServiceConfigurer) {
         clients
                 .withClientDetails(userDetailsService)
                 //todo get clients list from DB
                 .withClient("client_id")
-                .authorizedGrantTypes("password", "refresh_token")
+                .authorizedGrantTypes("client_credentials", "password", "refresh_token")
                 .authorities("ADMIN", "USER")
                 .scopes("read", "write")
                 .secret(passwordEncoder.encode("client_secret"))
     }
-
-    @Bean
-    fun tokenStore(): TokenStore = InMemoryTokenStore()
 
     @Autowired
     lateinit var authenticationManager: AuthenticationManager
@@ -50,5 +56,7 @@ class AuthorizationServerConfiguration() : AuthorizationServerConfigurerAdapter(
 
     override fun configure(security: AuthorizationServerSecurityConfigurer) {
         security.allowFormAuthenticationForClients()
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()")
     }
 }
