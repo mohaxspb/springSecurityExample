@@ -12,16 +12,16 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "oauth_access_token")
-data class OAuthAccesToken(
+data class OAuthAccessToken(
         @Id
         val token_id: String,
         @Lob
-        val token:String,
+        val token:ByteArray,
         val authentication_id:String,
         val user_name:String,
         val client_id:String,
         @Lob
-        val authentication:String,
+        val authentication:ByteArray,
         val refresh_token:String,
         @CreationTimestamp
         @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -30,7 +30,22 @@ data class OAuthAccesToken(
         @Version
         @Column(insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         val updated: Timestamp
-)
+) {
+        override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as OAuthAccessToken
+
+                if (token_id != other.token_id) return false
+
+                return true
+        }
+
+        override fun hashCode(): Int {
+                return token_id.hashCode()
+        }
+}
 //create table oauth_access_token (
 //token_id VARCHAR(256),
 //token bytea,
