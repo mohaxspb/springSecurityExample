@@ -11,7 +11,7 @@ data class OAuthRefreshToken(
         @Id
         val token_id: String,
         val token:ByteArray,
-        val authentication_id:ByteArray,
+        val authentication:ByteArray,
         @CreationTimestamp
         @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         val created: Timestamp,
