@@ -2,11 +2,6 @@ package ru.spring.api.bean
 
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
-import org.springframework.http.HttpStatus
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.web.bind.annotation.ResponseStatus
 import java.sql.Timestamp
 import javax.persistence.*
 
@@ -15,12 +10,10 @@ import javax.persistence.*
 data class OAuthAccessToken(
         @Id
         val token_id: String,
-        @Lob
         val token:ByteArray,
         val authentication_id:String,
         val user_name:String,
         val client_id:String,
-        @Lob
         val authentication:ByteArray,
         val refresh_token:String,
         @CreationTimestamp

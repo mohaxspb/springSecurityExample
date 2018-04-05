@@ -6,12 +6,14 @@ import java.sql.Timestamp
 import javax.persistence.*
 
 @Entity
-@Table(name = "oauth_refresh_token")
-data class OAuthRefreshToken(
+@Table(name = "oauth_client_token")
+data class OAuthClientToken(
         @Id
         val token_id: String,
         val token:ByteArray,
-        val authentication_id:ByteArray,
+        val authentication_id:String,
+        val user_name:String,
+        val client_id:String,
         @CreationTimestamp
         @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         val created: Timestamp,
@@ -24,7 +26,7 @@ data class OAuthRefreshToken(
                 if (this === other) return true
                 if (javaClass != other?.javaClass) return false
 
-                other as OAuthRefreshToken
+                other as OAuthClientToken
 
                 if (token_id != other.token_id) return false
 
@@ -35,8 +37,10 @@ data class OAuthRefreshToken(
                 return token_id.hashCode()
         }
 }
-//create table oauth_refresh_token (
+//create table oauth_client_token (
 //token_id VARCHAR(256),
 //token bytea,
-//authentication bytea
+//authentication_id VARCHAR(256),
+//user_name VARCHAR(256),
+//client_id VARCHAR(256)
 //);
