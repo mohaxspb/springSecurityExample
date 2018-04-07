@@ -21,7 +21,7 @@ class IndexController {
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder
 
-    @GetMapping
+    @GetMapping("/")
     fun index(): String = "Greetings from Spring Boot!"
 
     @GetMapping("/hello")
@@ -34,5 +34,6 @@ class IndexController {
     fun showAuthorities() = authoritiesService.findAll()
 
     @GetMapping("/encrypt")
-    fun encrypt(@RequestParam(value = "name", defaultValue = "World") name: String) = passwordEncoder.encode(name)
+    fun encrypt(@RequestParam(value = "name", defaultValue = "World") name: String) =
+            passwordEncoder.encode(name)
 }

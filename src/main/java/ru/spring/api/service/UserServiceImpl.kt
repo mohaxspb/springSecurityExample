@@ -3,6 +3,7 @@ package ru.spring.api.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import ru.spring.api.bean.User
+import ru.spring.api.bean.UserNotFoundException
 import ru.spring.api.repository.UsersRepository
 
 
@@ -12,25 +13,11 @@ class UserServiceImpl : UserService {
     @Autowired
     private lateinit var repository: UsersRepository
 
-    override fun findAll(): List<User> {
-        val data = repository.findAll()
+    override fun findAll() = repository.findAll().toList()
 
-        return data.toList()
-    }
-
-    override fun getById(id: Long): User? {
-        val user = repository.getOne(id)
-
-        return user
-    }
+    override fun getById(id: Long) = repository.getOne(id) ?: throw UserNotFoundException()
 
     override fun update(user: User): User = repository.save(user)
 
-    override fun loadUserByUsername(username: String): User {
-        val user = repository.findOneByMyUsername(username)
-
-        println("user: $user")
-
-        return user
-    }
+    override fun loadUserByUsername(username: String) = repository.findOneByMyUsername(username)
 }

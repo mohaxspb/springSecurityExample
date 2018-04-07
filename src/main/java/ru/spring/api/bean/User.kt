@@ -38,9 +38,8 @@ data class User(
         @Column(insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         val updated: Timestamp
 ) : UserDetails {
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return userAuthorities.map { SimpleGrantedAuthority(it.authority) }.toMutableList()
-    }
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
+            userAuthorities.map { SimpleGrantedAuthority(it.authority) }.toMutableList()
 
     override fun isEnabled() = enabled
 
