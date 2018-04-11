@@ -3,6 +3,7 @@ package ru.spring.api.configuration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.annotation.Order
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -11,13 +12,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import ru.spring.api.service.UserServiceImpl
 
 
 @Configuration
 @EnableWebSecurity
-@EnableResourceServer
+@Order(1)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
 
@@ -27,6 +28,7 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
     @Bean
     fun authenticationProvider(): DaoAuthenticationProvider {
         val authenticationProvider = DaoAuthenticationProvider()
+
         authenticationProvider.setUserDetailsService(userDetailsService)
         authenticationProvider.setPasswordEncoder(passwordEncoder())
         return authenticationProvider
@@ -49,14 +51,20 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
                 .authenticationProvider(authenticationProvider())
     }
 
+    @Bean
+    fun myFilter(): MyFilter {
+        return MyFilter()
+    }
+
     override fun configure(http: HttpSecurity) {
         http
                 .csrf().disable()
-        http
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
+
+        http
+                .addFilterBefore(myFilter(), BasicAuthenticationFilter::class.java)
     }
 }
