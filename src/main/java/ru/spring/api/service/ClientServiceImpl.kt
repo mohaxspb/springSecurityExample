@@ -15,9 +15,6 @@ class ClientServiceImpl : ClientDetailsService {
     private lateinit var repository: ClientDetailsRepository
 
     override fun loadClientByClientId(clientId: String): ClientDetails {
-        println("clientId: $clientId")
-        val details = repository.getOne(clientId) ?: throw ClientNotFoundError()
-        println("details: $details")
-        return details
+        return repository.getOne(clientId) ?: throw ClientNotFoundError()
     }
 }
