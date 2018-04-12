@@ -99,11 +99,15 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http
-                .csrf().disable()
+                .csrf()
+                .disable()
+        http
                 .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll()
+                .anyRequest()
+                .authenticated()
+        http
+                .formLogin()
+                .permitAll()
 
         http
                 .addFilterBefore(
